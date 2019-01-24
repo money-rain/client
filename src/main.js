@@ -7,7 +7,7 @@ import firestore from './firebase'
 
 Vue.config.productionTip = false
 Vue.prototype.$firestrore = firestore
-
+Vue.use(require('vue-shortkey'))
 new Vue({
   router,
   store,
