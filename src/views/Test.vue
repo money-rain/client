@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-container grid-list-xs style="max-width: 60%">
     <div class="display" :style="{'padding-top': 'calc(' + uangMarginTop + 'vh - 20px)'}">
       <img
         src="https://openclipart.org/image/2400px/svg_to_png/222589/cash2.png"
@@ -11,7 +12,7 @@
     </div>
     <div class="controller">
       <img
-        src="https://www.kahla-porzellanshop.de/media/catalog/product/cache/3/image/17f82f742ffe127f42dca9de82fb58b1/2/0/202921a70773-pronto-bowl14_01.png"
+        src="../assets/bowl.png"
         alt
         class="bowl"
         :style="{'margin-left' : bowlMarginLeft + '%'}"
@@ -19,22 +20,40 @@
       <!-- <div class="bowl" :style="{'margin-left' : bowlMarginLeft + '%'}"></div> -->
     </div>
     <div class="btn">
-      <button v-shortkey="['arrowleft']" @shortkey="moveLeft" @click="moveLeft">Left</button>
-      <button v-shortkey="['arrowright']" @shortkey="moveRight" @click="moveLeft">Right</button>
-      <h1>Score: {{score}}</h1>
+      <v-btn v-shortkey="['arrowleft']" @shortkey="moveLeft" @click="moveLeft" color="success">Left</v-btn>
+      <v-btn
+        v-shortkey="['arrowright']"
+        @shortkey="moveRight"
+        @click="moveRight"
+        color="success"
+      >Right</v-btn>
+      <v-container grid-list-xs>
+        <v-layout row wrap>
+          <v-flex xs6>
+            <h1>Score: {{score}}</h1>
+          </v-flex>
+          <v-flex xs6>
+            <h1>Enemy : {{score}}</h1>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </div>
+    </v-container>
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       uangStart: null,
       uangMarginLeft: 50,
+      uang2MarginLeft: 50,
       uangMarginTop: 0,
       bowlMarginLeft: 50,
-      score: 0
+      score: 0,
+      speed: 20
     };
   },
   mounted() {
@@ -46,17 +65,21 @@ export default {
         if (
           this.uangMarginLeft - this.bowlMarginLeft >= -2 &&
           this.uangMarginLeft - this.bowlMarginLeft <= 11 &&
-          this.uangMarginTop == 100
+          this.uangMarginTop == 70
         ) {
           this.score++;
         }
-        if (this.uangMarginTop <= 100) {
+        if (this.uangMarginTop <= 70) {
           this.uangMarginTop++;
         } else {
           this.uangMarginLeft = Math.round(Math.random() * 90);
           this.uangMarginTop = 0;
         }
-      }, 20);
+
+        if (this.score == 20) {
+          clearInterval(interval);
+        }
+      }, this.speed);
     },
     uangPosition() {},
     moveLeft() {
@@ -71,8 +94,8 @@ export default {
 
 <style>
 .display {
-  width: 100vh;
-  height: 100vh;
+  width: 100%;
+  height: 70vh;
   background-color: aqua;
 }
 
@@ -80,11 +103,12 @@ export default {
   margin-left: 100%;
   width: 50px;
   height: 50px;
+  position: relative;
 }
 
 .controller {
-  width: 100vh;
-  height: 50px;
+  width: 100%;
+  height: 10vh;
   background-color: aqua;
 }
 
