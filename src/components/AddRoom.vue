@@ -54,19 +54,23 @@ export default {
         .add({
           name: this.roomName,
           player1: {
+            id: '',
             name: '',
-            score: 0
+            status: false
           },
           player2: {
+            id: '',
             name: '',
-            score: 0
+            status: false
           }
         })
         .then(docRef => {
-          this.closeAddRoom();
+          console.log(docRef);
+          
+          this.closeAddRoom()
         })
         .catch(error => {
-          console.log(error);
+          console.log(error)
         })
     }
   }

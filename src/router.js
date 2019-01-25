@@ -28,6 +28,11 @@ export default new Router({
       path: '/rooms',
       name: 'rooms',
       component: () => import('./views/Rooms.vue')
+    },
+    {
+      path: '/waiting',
+      name: 'waiting',
+      component: () => import('./views/Waiting.vue')
     }
   ],
   mode: 'history'
