@@ -23,6 +23,11 @@ export default new Router({
       path: '/test',
       name: 'test',
       component: () => import('./views/Test.vue')
+    },
+    {
+      path: '/rooms',
+      name: 'rooms',
+      component: () => import('./views/Rooms.vue')
     }
   ],
   mode: 'history'
