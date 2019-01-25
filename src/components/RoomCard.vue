@@ -43,9 +43,9 @@ export default {
       } else if (!this.room.player2.name) {
           updatePlayer = {
             player1: {
-              id: this.room.player2.id,
-              name: this.room.player2.name,
-              status: this.room.player2.status
+              id: this.room.player1.id,
+              name: this.room.player1.name,
+              status: this.room.player1.status
             },
             player2: {
               id: localStorage.getItem('id'),
