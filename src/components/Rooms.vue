@@ -15,23 +15,19 @@
         <span class="title green--text font-weight-black"  style="font-family: 'ZCOOL KuaiLe', cursive !important;">Bikin Sarang Baru</span>
       </v-btn>
       </v-flex>
-      <v-flex>
-        <v-flex lg3 md3 sm6 xs12>
-          <v-card dark color="secondary">
-            <v-card-text>xs7 offset-(xs5 | md2 | lg5)</v-card-text>
-          </v-card>
-        </v-flex>
-      </v-flex>
+      <RoomList></RoomList>
     </v-layout>
     <AddRoom></AddRoom>
   </v-container>
 </template>
 
 <script>
-  import AddRoom from '@/components/AddRoom.vue'
+import AddRoom from '@/components/AddRoom.vue'
+import RoomList from '@/components/RoomList.vue'
 export default {
   components: {
-    AddRoom
+    AddRoom,
+    RoomList
   },
   methods: {
     showAddRoom () {

@@ -11,6 +11,7 @@
             <v-text-field
               label="Nama Sarang Loe"
               solo
+              v-model="roomName"
               class="title green--text font-weight-black"
               style="font-family: 'ZCOOL KuaiLe', cursive !important;"
             ></v-text-field>
@@ -21,7 +22,7 @@
             <v-btn
               color="green darken-1"
               flat
-              @click="closeAddRoom"
+              @click="submitAddRoom"
               class="title green--text font-weight-black"
               style="font-family: 'ZCOOL KuaiLe', cursive !important;"
             >Yuk Dah</v-btn>
@@ -34,7 +35,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      roomName: ''
+    };
   },
   computed: {
     dialog() {
@@ -46,7 +49,25 @@ export default {
       return this.$store.dispatch("closeAddRoom");
     },
     submitAddRoom() {
-      
+      this.$db
+        .collection('rooms')
+        .add({
+          name: this.roomName,
+          player1: {
+            name: '',
+            score: 0
+          },
+          player2: {
+            name: '',
+            score: 0
+          }
+        })
+        .then(docRef => {
+          this.closeAddRoom();
+        })
+        .catch(error => {
+          console.log(error);
+        })
     }
   }
 };
