@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-container grid-list-xs style="max-width: 60%">
     <div class="display" :style="{'padding-top': 'calc(' + uangMarginTop + 'vh - 20px)'}">
       <img
         src="https://openclipart.org/image/2400px/svg_to_png/222589/cash2.png"
@@ -37,6 +38,7 @@
         </v-layout>
       </v-container>
     </div>
+    </v-container>
   </div>
 </template>
 
@@ -63,11 +65,11 @@ export default {
         if (
           this.uangMarginLeft - this.bowlMarginLeft >= -2 &&
           this.uangMarginLeft - this.bowlMarginLeft <= 11 &&
-          this.uangMarginTop == 100
+          this.uangMarginTop == 70
         ) {
           this.score++;
         }
-        if (this.uangMarginTop <= 100) {
+        if (this.uangMarginTop <= 70) {
           this.uangMarginTop++;
         } else {
           this.uangMarginLeft = Math.round(Math.random() * 90);
@@ -92,8 +94,8 @@ export default {
 
 <style>
 .display {
-  width: 100vh;
-  height: 100vh;
+  width: 100%;
+  height: 70vh;
   background-color: aqua;
 }
 
@@ -105,7 +107,7 @@ export default {
 }
 
 .controller {
-  width: 100vh;
+  width: 100%;
   height: 10vh;
   background-color: aqua;
 }
