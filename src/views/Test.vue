@@ -11,7 +11,7 @@
     </div>
     <div class="controller">
       <img
-        src="https://www.kahla-porzellanshop.de/media/catalog/product/cache/3/image/17f82f742ffe127f42dca9de82fb58b1/2/0/202921a70773-pronto-bowl14_01.png"
+        src="../assets/bowl.png"
         alt
         class="bowl"
         :style="{'margin-left' : bowlMarginLeft + '%'}"
@@ -19,22 +19,39 @@
       <!-- <div class="bowl" :style="{'margin-left' : bowlMarginLeft + '%'}"></div> -->
     </div>
     <div class="btn">
-      <button v-shortkey="['arrowleft']" @shortkey="moveLeft" @click="moveLeft">Left</button>
-      <button v-shortkey="['arrowright']" @shortkey="moveRight" @click="moveLeft">Right</button>
-      <h1>Score: {{score}}</h1>
+      <v-btn v-shortkey="['arrowleft']" @shortkey="moveLeft" @click="moveLeft" color="success">Left</v-btn>
+      <v-btn
+        v-shortkey="['arrowright']"
+        @shortkey="moveRight"
+        @click="moveRight"
+        color="success"
+      >Right</v-btn>
+      <v-container grid-list-xs>
+        <v-layout row wrap>
+          <v-flex xs6>
+            <h1>Score: {{score}}</h1>
+          </v-flex>
+          <v-flex xs6>
+            <h1>Enemy : {{score}}</h1>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       uangStart: null,
       uangMarginLeft: 50,
+      uang2MarginLeft: 50,
       uangMarginTop: 0,
       bowlMarginLeft: 50,
-      score: 0
+      score: 0,
+      speed: 20
     };
   },
   mounted() {
@@ -56,7 +73,11 @@ export default {
           this.uangMarginLeft = Math.round(Math.random() * 90);
           this.uangMarginTop = 0;
         }
-      }, 20);
+
+        if (this.score == 20) {
+          clearInterval(interval);
+        }
+      }, this.speed);
     },
     uangPosition() {},
     moveLeft() {
@@ -80,11 +101,12 @@ export default {
   margin-left: 100%;
   width: 50px;
   height: 50px;
+  position: relative;
 }
 
 .controller {
   width: 100vh;
-  height: 50px;
+  height: 10vh;
   background-color: aqua;
 }
 
