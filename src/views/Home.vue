@@ -8,61 +8,61 @@
       <v-layout justify-center align-center>
         <v-flex md6 text-xs-center>
           <v-form @submit.prevent="addUsername">
-            <v-text-field v-model="name"
-                          style="color: red;"
-                          color="#ed1e1e"
-                          light
-                          background-color="#c6c6c6"
-                          label="Input your name"
-                          single-line
-                          box
+            <v-text-field
+              v-model="name"
+              style="color: red;"
+              color="#ed1e1e"
+              light
+              background-color="#c6c6c6"
+              label="Input your name"
+              single-line
+              box
             ></v-text-field>
-            <v-btn color="primary" @click.prevent="cing"> Click </v-btn>
+            <v-btn color="primary" @click.prevent="cing">Click</v-btn>
           </v-form>
         </v-flex>
       </v-layout>
     </v-container>
   </v-jumbotron>
-
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
+import { mapState } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
-    name : 'Home',
-    computed: mapState([
-      'soundOn'
-    ]),
-    mounted() {
-      
-    },
-    data: () => ({
-        name : '',
-        coin: 'https://freesound.org/people/cabled_mess/sounds/350873/download/350873__cabled-mess__coin-c-02.wav'
-    }),
-    methods : {
-      ...mapActions([
-        'soundOff'
-      ]),
-      addUsername () {
-        this.$db.collection("users").add({
-            name: this.name,
-            point: 0
+  name: "Home",
+  computed: mapState(["soundOn"]),
+  mounted() {},
+  data: () => ({
+    name: "",
+    coin:
+      "https://freesound.org/people/cabled_mess/sounds/350873/download/350873__cabled-mess__coin-c-02.wav"
+  }),
+  mounted() {
+  
+  },
+  methods: {
+    ...mapActions(["soundOff"]),
+    addUsername() {
+      this.$db
+        .collection("users")
+        .add({
+          name: this.name,
+          point: 0
         })
-        .then((docRef) => {
-          this.$router.push('/rooms');
+        .then(docRef => {
+          localStorage.setItem('id', docRef.id)
+          localStorage.setItem('name', this.name)
+          this.$router.push("/rooms");
         })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
+        .catch(error => {
+          console.error("Error adding document: ", error);
         });
-      },
-      cing() {
-        this.soundOff()
-      }
-      
     },
-    
+    cing() {
+      this.soundOff();
+    }
   }
+};
 </script>

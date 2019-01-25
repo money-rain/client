@@ -1,49 +1,53 @@
 <template>
   <div>
     <v-container grid-list-xs style="max-width: 60%">
-    <div class="display" :style="{'padding-top': 'calc(' + uangMarginTop + 'vh - 20px)'}">
-      <img
-        src="https://openclipart.org/image/2400px/svg_to_png/222589/cash2.png"
-        class="uang"
-        :style="{'margin-left' : uangMarginLeft + '%'}"
-        alt
-      >
-      <!-- <div class="uang" :style="{'margin-left' : uangMarginLeft + '%'}"></div> -->
-    </div>
-    <div class="controller">
-      <img
-        src="../assets/bowl.png"
-        alt
-        class="bowl"
-        :style="{'margin-left' : bowlMarginLeft + '%'}"
-      >
-      <!-- <div class="bowl" :style="{'margin-left' : bowlMarginLeft + '%'}"></div> -->
-    </div>
-    <div class="btn">
-      <v-btn v-shortkey="['arrowleft']" @shortkey="moveLeft" @click="moveLeft" color="success">Left</v-btn>
-      <v-btn
-        v-shortkey="['arrowright']"
-        @shortkey="moveRight"
-        @click="moveRight"
-        color="success"
-      >Right</v-btn>
-      <v-container grid-list-xs>
-        <v-layout row wrap>
-          <v-flex xs6>
-            <h1>Score: {{score}}</h1>
-          </v-flex>
-          <v-flex xs6>
-            <h1>Enemy : {{score}}</h1>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </div>
+      <div class="display" :style="{'padding-top': 'calc(' + uangMarginTop + 'vh - 20px)'}">
+        <img
+          src="https://openclipart.org/image/2400px/svg_to_png/222589/cash2.png"
+          class="uang"
+          :style="{'margin-left' : uangMarginLeft + '%'}"
+          alt
+        >
+        <!-- <div class="uang" :style="{'margin-left' : uangMarginLeft + '%'}"></div> -->
+      </div>
+      <div class="controller">
+        <img
+          src="../assets/bowl.png"
+          alt
+          class="bowl"
+          :style="{'margin-left' : bowlMarginLeft + '%'}"
+        >
+        <!-- <div class="bowl" :style="{'margin-left' : bowlMarginLeft + '%'}"></div> -->
+      </div>
+      <div class="btn">
+        <v-btn
+          v-shortkey="['arrowleft']"
+          @shortkey="moveLeft"
+          @click="moveLeft"
+          color="success"
+        >Left</v-btn>
+        <v-btn
+          v-shortkey="['arrowright']"
+          @shortkey="moveRight"
+          @click="moveRight"
+          color="success"
+        >Right</v-btn>
+        <v-container grid-list-xs>
+          <v-layout row wrap>
+            <v-flex xs6>
+              <h1>Score: {{score}}</h1>
+            </v-flex>
+            <v-flex xs6>
+              <h1>Enemy : {{skorEnemy}}</h1>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -53,11 +57,20 @@ export default {
       uangMarginTop: 0,
       bowlMarginLeft: 50,
       score: 0,
-      speed: 20
+      speed: 20,
+      skorEnemy: 0
     };
   },
   mounted() {
     this.uangJatuh();
+    this.$db.collection('users').doc(localStorage.getItem('idEnemy'))
+    .onSnapshot(querySnapshot => {
+      this.skorEnemy = querySnapshot.data().point
+    })
+    this.$db.collection('users').doc(localStorage.getItem('id'))
+    .onSnapshot(querySnapshot => {
+      this.score = querySnapshot.data().point
+    })
   },
   methods: {
     uangJatuh() {
@@ -67,7 +80,7 @@ export default {
           this.uangMarginLeft - this.bowlMarginLeft <= 11 &&
           this.uangMarginTop == 70
         ) {
-          this.score++;
+          this.dapat()
         }
         if (this.uangMarginTop <= 70) {
           this.uangMarginTop++;
@@ -87,6 +100,10 @@ export default {
     },
     moveRight() {
       this.bowlMarginLeft += 1;
+    },
+    dapat() {
+      console.log(`harusnya dapet`);
+      this.$db.collection('users').doc(localStorage.getItem('id')).update({point: this.score + 1})
     }
   }
 };
