@@ -1,6 +1,17 @@
 <template>
   <div>
-    <v-container grid-list-xs style="max-width: 60%">
+    <v-container v-if="isWin" style="position: relative; z-index: 999;">
+      <v-img
+            src="https://data.whicdn.com/images/102412253/original.gif"
+      ></v-img>
+      
+    </v-container>
+    <v-container v-if="isLose" style="position: relative; z-index: 999;">
+      <v-img
+            src="https://i.gifer.com/3QyH.gif"
+      ></v-img>
+    </v-container>
+    <v-container  grid-list-xs style="max-width: 60%">
       <div class="display" :style="{'padding-top': 'calc(' + uangMarginTop + 'vh - 20px)'}">
         <img
           src="https://openclipart.org/image/2400px/svg_to_png/222589/cash2.png"
@@ -58,7 +69,9 @@ export default {
       bowlMarginLeft: 50,
       score: 0,
       speed: 20,
-      skorEnemy: 0
+      skorEnemy: 0,
+      isWin : false,
+      isLose : false
     };
   },
   mounted() {
@@ -90,6 +103,11 @@ export default {
         }
 
         if (this.score == 20) {
+          this.isWin = true;
+          clearInterval(interval);
+        }
+        if(this.skorEnemy == 20){
+          this.isLose = true
           clearInterval(interval);
         }
       }, this.speed);
