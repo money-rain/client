@@ -30,23 +30,27 @@ export default {
       if (!this.room.player1.name) {
         updatePlayer = {
           player1: {
+            id: localStorage.getItem('id'),
             name: localStorage.getItem('name'),
-            score: 0
+            status: false
           },
           player2: {
+            id: this.room.player2.id,
             name: this.room.player2.name,
-            score: 0
+            status: this.room.player2.status
           }
         }
       } else if (!this.room.player2.name) {
           updatePlayer = {
             player1: {
-              name: this.room.player1.name,
-              score: 0
+              id: this.room.player2.id,
+              name: this.room.player2.name,
+              status: this.room.player2.status
             },
             player2: {
+              id: localStorage.getItem('id'),
               name: localStorage.getItem('name'),
-              score: 0
+              status: false
             }
           }
       }
@@ -55,7 +59,8 @@ export default {
         .doc(this.room.id)
         .update(updatePlayer)
         .then(() => {
-          console.log('updated')
+          localStorage.setItem('roomId', this.room.id)
+          this.$router.replace('/waiting')
         })
     }
   },
