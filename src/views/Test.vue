@@ -82,6 +82,10 @@ export default {
     })
     this.$db.collection('users').doc(localStorage.getItem('id'))
     .onSnapshot(querySnapshot => {
+      console.log('my score', querySnapshot.data().point)
+
+            console.log('my score', querySnapshot.data())
+
       this.score = querySnapshot.data().point
     })
   },
@@ -121,7 +125,9 @@ export default {
     },
     dapat() {
       console.log(`harusnya dapet`);
-      this.$db.collection('users').doc(localStorage.getItem('id')).update({point: this.score + 1})
+      const myScore = this.score + 1
+      console.log('harusnya dapet hjhjhj', myScore);
+      this.$db.collection('users').doc(localStorage.getItem('id')).update({point: myScore})
     }
   }
 };
