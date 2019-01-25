@@ -1,6 +1,25 @@
 <template>
-  <div>
-  {{ isReady }}
+  <div style="background-color : #2bbc87; height: 100vh;">
+    <v-dialog
+      v-model="dialog"
+      hide-overlay
+      persistent
+      width="300"
+    >
+      <v-card
+        color="primary"
+        dark
+      >
+        <v-card-text>
+          menunggu lawan
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -8,6 +27,7 @@
 export default {
   data () {
     return {
+      dialog : true,
       roomData: {},
       isReady: false
     }
@@ -18,6 +38,7 @@ export default {
       this.roomData = querySnapshot.data()
       if (this.roomData.player1 && this.roomData.player2.name) {
         this.isReady = true
+        this.dialog = false
       }
     })
   },

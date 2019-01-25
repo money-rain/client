@@ -11,7 +11,9 @@
             src="https://i.gifer.com/3QyH.gif"
       ></v-img>
     </v-container>
-    <v-container  grid-list-xs style="max-width: 60%">
+
+
+    <v-container v-if="status" grid-list-xs style="max-width: 60%">
       <div class="display" :style="{'padding-top': 'calc(' + uangMarginTop + 'vh - 20px)'}">
         <img
           src="https://openclipart.org/image/2400px/svg_to_png/222589/cash2.png"
@@ -71,7 +73,8 @@ export default {
       speed: 20,
       skorEnemy: 0,
       isWin : false,
-      isLose : false
+      isLose : false,
+      status : true
     };
   },
   mounted() {
@@ -108,11 +111,27 @@ export default {
 
         if (this.score == 20) {
           this.isWin = true;
+          this.status = false;
           clearInterval(interval);
+          this.$db.collection('users').doc(localStorage.getItem('id')).update({point: 0})
+          .then (() => {
+            this.$db.collection('rooms').doc(localStorage.getItem('roomId')).delete()
+            setTimeout(() => {
+              this.$router.push("/rooms");
+            }, 2000);
+          })
         }
         if(this.skorEnemy == 20){
           this.isLose = true
+          this.status = false
           clearInterval(interval);
+          this.$db.collection('users').doc(localStorage.getItem('id')).update({point: 0})
+          .then (() => {
+            this.$db.collection('rooms').doc(localStorage.getItem('roomId')).delete()
+            setTimeout(() => {
+              this.$router.push("/rooms");
+            }, 2000);
+          })
         }
       }, this.speed);
     },
@@ -128,6 +147,11 @@ export default {
       const myScore = this.score + 1
       console.log('harusnya dapet hjhjhj', myScore);
       this.$db.collection('users').doc(localStorage.getItem('id')).update({point: myScore})
+      this.cing()
+    },
+    cing() {
+      var audio = new Audio('https://freesound.org/people/cabled_mess/sounds/350873/download/350873__cabled-mess__coin-c-02.wav')
+      audio.play()
     }
   }
 };

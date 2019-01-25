@@ -18,7 +18,6 @@
               single-line
               box
             ></v-text-field>
-            <v-btn color="primary" @click.prevent="cing">Click</v-btn>
           </v-form>
         </v-flex>
       </v-layout>
